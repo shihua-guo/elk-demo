@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <!--配置logStash 服务地址-->
+        <destination>139.9.40.185:5000</destination>
+        <!-- 日志输出编码 -->
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender>
+    <!--定义elk日志的名称，需要上传的则使用该logger-->
+    <logger name="elk_logger" level="INFO" additivity="false">
+        <appender-ref ref="LOGSTASH"/><!--输出到logstash-->
+        <appender-ref ref="CONSOLE"/><!--同时输出到控制台-->
+    </logger>
+</configuration>
